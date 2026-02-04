@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập JS - abc.js</title>
+</head>
+
+<body>
+    <h1>Kết quả chạy file abc.js</h1>
+
+    <pre id="output" style="background: #f4f4f4; padding: 10px; border: 1px solid #ddd;"></pre>
+
+    <script>
+        // Đoạn script này giúp hiển thị console.log ra màn hình web
+        (function () {
+            const output = document.getElementById("output");
+            output.textContent = "";
+
+            const oldLog = console.log;
+            console.log = function (...args) {
+                oldLog.apply(console, args);
+                const line = args.map(x => {
+                    if (typeof x === "object") return JSON.stringify(x, null, 2);
+                    return String(x);
+                }).join(" ");
+                output.textContent += line + "\n";
+            };
+
+            const oldErr = console.error;
+            console.error = function (...args) {
+                oldErr.apply(console, args);
+                const line = args.map(x => String(x)).join(" ");
+                output.textContent += "[ERROR] " + line + "\n";
+            };
+        })();
+    </script>
+    
+    <script src="./abc.js"></script>
+</body>
+
+</html>
